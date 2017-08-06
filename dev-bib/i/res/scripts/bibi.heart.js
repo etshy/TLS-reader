@@ -2797,7 +2797,10 @@ I.createMenu = function() {
         "html.view-vertical.subpanel-opened div#bibi-menu"
     ].join(", "), "width: 100%; padding-right: " + (O.Scrollbars.Width) + "px;");
 
-    I.createMenu.createPanelSwitch();
+    if(S["create-panel-switch"])
+    {
+        I.createMenu.createPanelSwitch();
+    }
 
     I.createMenu.SettingMenuComponents = [];
     if(!S["fix-reader-view-mode"])                                                                     I.createMenu.SettingMenuComponents.push("ViewModeButtons");

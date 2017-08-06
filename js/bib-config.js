@@ -60,7 +60,9 @@ Bibi.Preset = {
 "epub-additional-stylesheet" : "", // path from spine-item or http:// URI or ""
 "epub-additional-script"     : "", // path from spine-item or http:// URI or ""
 
+    //added config
 "force-writing-mode"         : "rl-tb",
+"create-panel-switch"        : false,
 
 // =================================================================================================
 

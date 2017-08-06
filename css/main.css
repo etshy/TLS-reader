@@ -1,20 +1,17 @@
-.reader-header-bar
+body,
+body.pushable>.pusher
 {
-    position: relative;
-    z-index: 150;
-    top:0;
-    left: 0;
-    right:0;
-    width:100%;
-    height: 80px;
-    background-color: white;
+    background-color: #DADADA;
 }
-.reader-header-bar img
+img
 {
-    position: relative;
-    max-height: 80%;
-    margin-top:10px;
+    max-width: 100%;
 }
+#first_page>div
+{
+    margin-top: 20px;
+}
+
 .reader-content
 {
     height:100%;
@@ -31,33 +28,51 @@
     width: 100%;
     height: 100%;
 }
-.toggle-sidebar
+
+.btn-navigation
 {
     position: absolute;
     height: 50px;
     width: 50px;
-    left: 20px;
-    bottom:20px;
     z-index: 200;
     font-size:2.1em;
-
 }
-.toggle-sidebar > div.image
+.toggle-sidebar
+{
+    left: 20px;
+    top:20px;
+}
+.prev-chapter
+{
+    right: 20px;
+    bottom:20px;
+}
+.next-chapter
+{
+    left: 20px;
+    bottom:20px;
+}
+.toggle-sidebar > div.image,
+.prev-chapter > div.image,
+.next-chapter > div.image
 {
     position: relative;
     height: 50px;
     width: 50px;
     line-height: 50px;
-    background-color: white;
+    background-color: #c9c9c9;
     cursor: pointer;
 }
-.toggle-sidebar > div > i
-{
 
+.toggle-sidebar > div > i,
+.prev-chapter >div > i,
+.next-chapter >div > i
+{
     display: block;
     width: 100%;
     text-align: center;
 }
+
 .bibi-menu
 {
     display: none;
