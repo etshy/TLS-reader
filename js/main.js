@@ -249,26 +249,23 @@ $(function()
     function toggleChapView(that)
     {
         $chapList = $(that).closest('div').children('.chap-list');
-        $chapList.toggle();
-        if($chapList.is(':visible')){
-            $(that).html('<i class="icon minus"></i> Masquer les chapitres')
-        } else {
-            $(that).html('<i class="icon plus"></i> Voir les chapitres ')
-        }
+        $chapList.slideToggle(function(){
+            if($chapList.is(':visible')){
+                $(that).html('<i class="icon minus"></i> Masquer les chapitres')
+            } else {
+                $(that).html('<i class="icon plus"></i> Voir les chapitres ')
+            }
+        });
     }
 
     function goToChapterOnFirstPage(that) {
-
         selectedSerie = $(that).closest('.serie-card').data('serie')
         selectedChap = $(that).data('chap');
-
         readerEnabled = true;
-        $(".ui.main.container").toggle();
-        $(".masthead").toggle();
-        $("#toggle_sidebar").toggle();
-
+        $(".ui.main.container").slideToggle();
+        $(".masthead").slideToggle();
+        $("#toggle_sidebar").slideToggle();
         changeReaderSource();
-
     }
 
     /**
@@ -300,7 +297,7 @@ $(function()
         changeReaderSource(url);
 
         $("#toggle_sidebar").trigger('click');
-        $(".masthead").toggle();
+        $(".masthead").slideToggle();
     });
 
     $("#next_chapter").on("click", function (event) {
