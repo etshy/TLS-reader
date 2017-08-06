@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=4.0, user-scalable=yes, shrink-to-fit=no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<title>Reader</title>
+
+	<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+	<script
+			src="https://code.jquery.com/jquery-3.1.1.min.js"
+			integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			crossorigin="anonymous"></script>
+	<script src="semantic/dist/semantic.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+
+	<div class="ui sidebar vertical menu left">
+		<a class="item">
+			<img src="https://i1.wp.com/to-love-scan.com/wp-content/uploads/2017/02/cropped-cropped-tls_logo-1.png?fit=300%2C60&ssl=1" alt="logo">
+		</a>
+		<a class="item">
+            <form class="ui form" id="choisir_chap">
+                <div class="field">
+                    <label>Sellectionne une série :</label>
+                    <select class="ui fluid dropdown" id="series_select">
+
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Sellectionne un chapitre :</label>
+                    <select class="ui fluid dropdown" id="chapter_select">
+
+                    </select>
+                </div>
+                <div class="field">
+                    <div type="submit" class="ui submit button" tabindex="0">Lire le chapitre</div>
+                </div>
+            </form>
+
+		</a>
+	</div>
+
+
+	<div class="pusher  reader-content">
+
+		<div class="toggle-sidebar" id="toggle_sidebar">
+			<div class="ui circular icon image">
+				<i class="sidebar icon"></i>
+			</div>
+
+		</div>
+
+        <div class="embed-reader">
+
+
+                <iframe class="bibi-frame" id="embedded_reader"
+                        scrolling="auto"
+                        src="" frameborder="0"></iframe>
+
+
+        </div>
+	</div>
+
+	<script src="js/main.js"></script>
+</body>
+</html>

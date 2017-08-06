@@ -1,0 +1,22 @@
+{
+  "name": "tls-reader",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000T\u0000L\u0000S\u0000-\u0000r\u0000e\u0000a\u0000d\u0000e\u0000r\u0000\r\u0000 \u0000",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/etshy/TLS-reader.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/etshy/TLS-reader/issues"
+  },
+  "homepage": "https://github.com/etshy/TLS-reader#readme",
+  "dependencies": {
+    "semantic-ui": "^2.2.11"
+  }
+}
