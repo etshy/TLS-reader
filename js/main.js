@@ -184,8 +184,14 @@ $(function()
 
             $card.append($titre);
 
+            $chapDIV = $("<div>");
+            $chapDIV.addClass('content');
+
+
             $chapList = $("<div>");
-            $chapList.addClass('content');
+            $chapList.css({'display': 'none'})
+            $chapList.addClass('chap-list');
+            var chapNumber = 0;
             $.each(value, function (index2, value2) {
 
                 var image = false;
@@ -204,11 +210,10 @@ $(function()
                     $imageDiv.append($image);
                     $imageContent.append($imageDiv);
                     $card.append($imageContent);
-
                 } else {
                     //dossier epub
                     epub = true;
-
+                    chapNumber++;
                     $linkDiv = $("<div>");
                     $link = $("<a>");
                     $link.addClass('chap-link pointing');
@@ -220,14 +225,34 @@ $(function()
                     $chapList.append($linkDiv);
 
                 }
-
-
             });
-            $card.append($chapList);
+
+            if(chapNumber > 0)
+            {
+                $voirChapDIV = $("<button>");
+                $voirChapDIV.addClass("voir-chaps ui button right labeled icon fluid")
+                $voirChapDIV.html( '<i class="icon plus"></i> Voir les chapitres ' );
+                $chapDIV.prepend($voirChapDIV);
+            }
+
+
+            $chapDIV.append($chapList);
+            $card.append($chapDIV);
             $column.append($card);
             $("#first_page").append($column);
         });
 
+    }
+
+    function toggleChapView(that)
+    {
+        $chapList = $(that).closest('div').children('.chap-list');
+        $chapList.toggle();
+        if($chapList.is(':visible')){
+            $(that).html('<i class="icon minus"></i> Masquer les chapitres')
+        } else {
+            $(that).html('<i class="icon plus"></i> Voir les chapitres ')
+        }
     }
 
     function goToChapterOnFirstPage(that) {
@@ -285,7 +310,10 @@ $(function()
     $("#first_page").on("click", ".chap-link", function(event){
         event.preventDefault();
         goToChapterOnFirstPage(this);
-        
+    });
+    $("#first_page").on("click", ".voir-chaps", function(event){
+        event.preventDefault();
+        toggleChapView(this);
     });
 
 });

@@ -7,6 +7,12 @@ img
 {
     max-width: 100%;
 }
+.ui.card
+{
+    width: 100%;
+}
+
+
 #first_page>div
 {
     margin-top: 20px;
