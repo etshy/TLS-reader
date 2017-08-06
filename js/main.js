@@ -35,9 +35,11 @@ $(function()
      */
     function changeReaderSource()
     {
+        $(".embed-reader").show();
         var url;
         url = 'bib/i/?book='+selectedSerie+'/'+selectedChap;
         var epubUrl = encodeURI(url);
+
         $("#embedded_reader").attr('src', epubUrl);
 
         readerEnabled = true;
