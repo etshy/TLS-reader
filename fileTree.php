@@ -36,7 +36,7 @@ function listFolders($dir, $hierarchyLevel)
                 {
                     $return[$folder] = array();
                 } else {
-                    $return[$folder] = listFolders($dir . '/' . $folder);
+                    $return[$folder] = listFolders($dir . '/' . $folder, $hierarchyLevel);
                 }
             } else {
                 $return[] = $folder;
