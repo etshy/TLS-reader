@@ -14,6 +14,8 @@
  */
 
 $epubFolders = "bookshelf/";
+//Max hierarchy to search
+$hierarchyLevelMax = 2;
 
 /**
  * ENF CONFIG
@@ -21,15 +23,21 @@ $epubFolders = "bookshelf/";
 
 header("Access-Control-Allow-Origin: *");
 
-function listFolders($dir)
+function listFolders($dir, $hierarchyLevel)
 {
+    $hierarchyLevel++;
     $dh = scandir($dir);
     $return = array();
 
     foreach ($dh as $folder) {
         if ($folder != '.' && $folder != '..') {
             if (is_dir($dir . '/' . $folder)) {
-                $return[$folder] = listFolders($dir . '/' . $folder);
+                if($hierarchyLevel == $hierarchyLevelMax)
+                {
+                    $return[$folder] = array();
+                } else {
+                    $return[$folder] = listFolders($dir . '/' . $folder);
+                }
             } else {
                 $return[] = $folder;
             }
@@ -40,7 +48,7 @@ function listFolders($dir)
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    $folders = listFolders($epubFolders);
+    $folders = listFolders($epubFolders, 0);
     header('Content-Type: application/json');
     echo json_encode($folders);
 }
