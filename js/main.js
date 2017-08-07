@@ -33,9 +33,12 @@ $(function()
     /**
      * Functions
      */
+
     function changeReaderSource()
     {
-        $(".embed-reader").show();
+        $(".reader-pusher").show();
+        $(".embed-reader").slideDown();
+
         var url;
         url = 'reader.html?book='+selectedSerie+'/'+selectedChap;
         var epubUrl = encodeURI(url);
@@ -50,6 +53,7 @@ $(function()
 
     function generateChapterSelect()
     {
+        var selectedChapFound = false;
         if(!$("#series_select").val())
         {
             return false;
@@ -58,8 +62,6 @@ $(function()
         var chapterSerie = fileTreeJson[serie];
         $('#chapter_select').empty();
         $.each(chapterSerie, function (index, value) {
-
-
             if(typeof value == 'string')
             {
                 //image, on a le nom de l'image
@@ -69,8 +71,17 @@ $(function()
                 $option.attr('value', index);
                 $option.text(index);
                 $('#chapter_select').append($option);
+
+                if(selectedChap == index) {
+                    selectedChapFound = true;
+                }
             }
         });
+
+        if(selectedChapFound)
+        {
+            $('#chapter_select').val(selectedChap)
+        }
     }
 
     function generateSeriesSelect()
@@ -105,17 +116,25 @@ $(function()
         var actualChap = null;
         var actualChapFound = false;
         $.each(fileTreeJson[selectedSerie], function (index, value) {
-            actualChap = index;
-            if(actualChapFound)
+
+            if(typeof value == 'string')
             {
-                //Chap actuel trouvé au passage précédent donc on garde ce chap en tant que nextChap
-                nextChap = actualChap;
-                return false;
+                //image, on a le nom de l'image
+            } else {
+                //dossier epub
+                actualChap = index;
+                if(actualChapFound)
+                {
+                    //Chap actuel trouvé au passage précédent donc on garde ce chap en tant que nextChap
+                    nextChap = actualChap;
+                    return false;
+                }
+                if(actualChap == selectedChap)
+                {
+                    actualChapFound = true;
+                }
             }
-            if(actualChap == selectedChap)
-            {
-                actualChapFound = true;
-            }
+
         });
 
         if(nextChap) {
@@ -131,19 +150,28 @@ $(function()
         prevChap = null;
         var prevChapTemp = null;
         $.each(fileTreeJson[selectedSerie], function (index, value) {
-            var actualChap = index;
-            var actualChapFound = false;
-            if(actualChap == selectedChap)
+
+            if(typeof value == 'string')
             {
-                actualChapFound = true;
+                //image, on a le nom de l'image
+            } else {
+                //dossier epub
+
+                var actualChap = index;
+                var actualChapFound = false;
+                if(actualChap == selectedChap)
+                {
+                    actualChapFound = true;
+                }
+                if(actualChapFound && prevChapTemp)
+                {
+                    //Chap actuel trouvé, on passe le selectedChap avec la valeur du passage d'avant
+                    prevChap = prevChapTemp;
+                    return false;
+                }
+                prevChapTemp = actualChap;
             }
-            if(actualChapFound && prevChapTemp)
-            {
-                //Chap actuel trouvé, on passe le selectedChap avec la valeur du passage d'avant
-                prevChap = prevChapTemp;
-                return false;
-            }
-            prevChapTemp = actualChap;
+
         });
 
         if(prevChap) {
@@ -156,11 +184,13 @@ $(function()
     function goToNextChapter()
     {
         selectedChap = nextChap;
+        $("#chapter_select").val(selectedChap);
         changeReaderSource();
     }
     function goToPrevChapter()
     {
         selectedChap = prevChap;
+        $("#chapter_select").val(selectedChap);
         changeReaderSource();
     }
     function getFileTreeJson()
@@ -185,7 +215,7 @@ $(function()
         $.each(fileTreeJson, function (index, value) {
 
             $column = $('<div>');
-            $column.addClass('five wide column');
+            $column.addClass('column');
 
             $card = $('<div>');
             $card.addClass('ui card serie-card');
@@ -272,10 +302,27 @@ $(function()
         selectedSerie = $(that).closest('.serie-card').data('serie')
         selectedChap = $(that).data('chap');
         readerEnabled = true;
-        $(".ui.main.container").slideToggle();
-        $(".masthead").slideToggle();
-        $("#toggle_sidebar").slideToggle();
+
+        $("#series_select").val(selectedSerie);
+        $("#series_select").trigger('change');
+
+        $("#first_page_content").slideUp();
+        $("#toggle_sidebar").show();
+        $("#navigation_div").show();
+
         changeReaderSource();
+    }
+
+    function goBackToFirstPage(){
+        $("#toggle_sidebar").trigger('click');
+        $("#navigation_div").hide();
+        $(".embed-reader").slideUp(function () {
+            $(".reader-pusher").hide();
+            $("#first_page_content").slideDown(function () {
+
+            });
+        });
+
     }
 
     /**
@@ -288,6 +335,7 @@ $(function()
      * Events
      */
     $("#series_select").on('change', function (event) {
+
         generateChapterSelect();
         selectedSerie = $(this).val();
         selectedChap = $("#chapter_select").val();
@@ -307,7 +355,7 @@ $(function()
         changeReaderSource(url);
 
         $("#toggle_sidebar").trigger('click');
-        $(".masthead").slideToggle();
+        $("#first_page_content").slideUp();
     });
 
     $("#next_chapter").on("click", function (event) {
@@ -323,6 +371,10 @@ $(function()
     $("#first_page").on("click", ".voir-chaps", function(event){
         event.preventDefault();
         toggleChapView(this);
+    });
+    $("#back_first_page").on("click", function (event) {
+        event.preventDefault();
+        goBackToFirstPage();
     });
 
 });

@@ -17,11 +17,17 @@
 
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
-<body>
+<body class="pushable">
 	<div class="ui sidebar vertical menu left">
 		<a class="item" href="https://to-love-scan.com/" target="_blank">
 			<img src="https://i1.wp.com/to-love-scan.com/wp-content/uploads/2017/02/cropped-cropped-tls_logo-1.png?fit=300%2C60&ssl=1" alt="logo">
 		</a>
+		<div class="item">
+			<div class="ui right icon button red inverted fluid" id="back_first_page">
+				<i class="left circle arrow icon"></i>
+				Retour à la liste
+			</div>
+		</div>
 		<div class="item">
             <form class="ui form" id="choisir_chap">
                 <div class="field">
@@ -45,51 +51,56 @@
 		</div>
 	</div>
 
+	<div class="pusher" id="first_page_content">
+		<div class=" reader-content">
+			<div class="" >
+				<div class="ui inverted vertical masthead center aligned segment" id="first_page_header">
+					<div class="ui text container">
+						<a href="https://to-love-scan.com/" target="_blank">
+							<img src="https://i1.wp.com/to-love-scan.com/wp-content/uploads/2017/02/cropped-cropped-tls_logo-1.png?fit=300%2C60&ssl=1" alt="logo">
+						</a>
+					</div>
+				</div>
 
+				<!-- Premiere page -->
+				<div class="ui main container" id="first_page_container">
+					<div class="ui three column grid"  id="first_page">
 
-	<div class="pusher reader-content">
-
-		<div class="ui inverted vertical masthead center aligned segment">
-			<div class="ui text container">
-				<a href="https://to-love-scan.com/" target="_blank">
-					<img src="https://i1.wp.com/to-love-scan.com/wp-content/uploads/2017/02/cropped-cropped-tls_logo-1.png?fit=300%2C60&ssl=1" alt="logo">
-				</a>
+					</div>
+				</div>
 			</div>
 		</div>
-
-		<!-- Premiere page -->
-		<div class="ui main container">
-			<div class="ui grid"  id="first_page">
-
-			</div>
-		</div>
-
-
-		<!-- Navigation -->
-		<div class="btn-navigation toggle-sidebar" id="toggle_sidebar" style="display:none;">
-			<div class="ui circular icon image">
-				<i class="sidebar icon"></i>
-			</div>
-		</div>
-		<div class="btn-navigation prev-chapter" id="prev_chapter" style="display:none;" data-tooltip="Chapitre précédent" data-position="top right">
-			<div class="ui circular icon image pointing" >
-
-				<i class="angle double right icon"></i>
-			</div>
-		</div>
-		<div class="btn-navigation next-chapter" id="next_chapter" style="display:none;" data-tooltip="Chapitre suivant" data-position="top left">
-			<div class="ui circular icon image pointing" >
-				<i class="angle double left icon"></i>
-			</div>
-		</div>
-
-		<!-- Reader -->
-        <div class="embed-reader" style="display: none;">
-                <iframe class="bibi-frame" id="embedded_reader"
-                        scrolling="auto"
-                        src="" frameborder="0"></iframe>
-        </div>
 	</div>
+	<div class="pusher reader-pusher" style="display: none;">
+		<!-- Navigation -->
+		<div id="navigation_div" style="display: none;">
+			<div class="btn-navigation toggle-sidebar" id="toggle_sidebar" style="display:none;">
+				<div class="ui circular icon image">
+					<i class="sidebar icon"></i>
+				</div>
+			</div>
+			<div class="btn-navigation prev-chapter" id="prev_chapter" style="display:none;" data-tooltip="Chapitre précédent" data-position="top right">
+				<div class="ui circular icon image pointing" >
+
+					<i class="angle double right icon"></i>
+				</div>
+			</div>
+			<div class="btn-navigation next-chapter" id="next_chapter" style="display:none;" data-tooltip="Chapitre suivant" data-position="top left">
+				<div class="ui circular icon image pointing" >
+					<i class="angle double left icon"></i>
+				</div>
+			</div>
+		</div>
+		<!-- Reader -->
+		<div class="embed-reader" style="display: none;">
+			<iframe class="bibi-frame" id="embedded_reader"
+					scrolling="auto"
+					src="" frameborder="0"></iframe>
+		</div>
+
+	</div>
+
+
 	<script src="js/main.js"></script>
 </body>
 </html>

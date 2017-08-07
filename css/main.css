@@ -7,15 +7,25 @@ img
 {
     max-width: 100%;
 }
+.reader-pusher
+{
+    height: 100%;
+}
 .ui.card
 {
     width: 100%;
 }
-
-
-#first_page>div
+#first_page_container
 {
-    margin-top: 20px;
+    margin-bottom: 30px;
+}
+#fist_page_content
+{
+    min-height:100%;
+}
+#first_page
+{
+    margin-top: 30px;
 }
 .chap-list
 {
@@ -29,10 +39,14 @@ img
 {
     color: #000;
 }
-
 .reader-content
 {
-    height:100%;
+    position: relative;
+    min-height:100%;
+}
+.image
+{
+    text-align: center;
 }
 .embed-reader
 {
