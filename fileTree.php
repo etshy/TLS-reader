@@ -31,6 +31,8 @@ function listFolders($dir)
             if (is_dir($dir . '/' . $folder)) {
                 $return[$folder] = listFolders($dir . '/' . $folder);
             } else {
+                //FILE
+                //TODO Detect file extension and adapt array key ('image', 'synopsis' etc.)
                 $return[] = $folder;
             }
         }

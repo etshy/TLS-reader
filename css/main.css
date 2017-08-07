@@ -17,6 +17,18 @@ img
 {
     margin-top: 20px;
 }
+.chap-list
+{
+    max-height: 150px;
+}
+.chap-link-div
+{
+    margin-top: 10px;
+}
+.chap-link-div  > a
+{
+    color: #000;
+}
 
 .reader-content
 {

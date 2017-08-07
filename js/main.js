@@ -58,10 +58,18 @@ $(function()
         var chapterSerie = fileTreeJson[serie];
         $('#chapter_select').empty();
         $.each(chapterSerie, function (index, value) {
-            $option = $('<option>');
-            $option.attr('value', index);
-            $option.text(index);
-            $('#chapter_select').append($option);
+
+
+            if(typeof value == 'string')
+            {
+                //image, on a le nom de l'image
+            } else {
+                //dossier epub
+                $option = $('<option>');
+                $option.attr('value', index);
+                $option.text(index);
+                $('#chapter_select').append($option);
+            }
         });
     }
 
@@ -76,10 +84,16 @@ $(function()
         $('#series_select').empty();
 
         $.each(fileTreeJson, function (index, value) {
-            $option = $('<option>');
-            $option.attr('value', index);
-            $option.text(index);
-            $('#series_select').append($option);
+            if(typeof value == 'string')
+            {
+                //image, on a le nom de l'image
+            } else {
+                //dossier epub
+                $option = $('<option>');
+                $option.attr('value', index);
+                $option.text(index);
+                $('#series_select').append($option);
+            }
         });
 
         generateChapterSelect();
@@ -196,13 +210,9 @@ $(function()
             var chapNumber = 0;
             $.each(value, function (index2, value2) {
 
-                var image = false;
-                var epub = false;
-
                 if(typeof value2 == 'string')
                 {
                     //image, on a le nom de l'image
-                    image = true;
                     $imageContent = $("<div>");
                     $imageContent.addClass('content');
                     $imageDiv = $("<div>");
@@ -214,14 +224,14 @@ $(function()
                     $card.append($imageContent);
                 } else {
                     //dossier epub
-                    epub = true;
                     chapNumber++;
                     $linkDiv = $("<div>");
+                    $linkDiv.addClass('chap-link-div');
                     $link = $("<a>");
                     $link.addClass('chap-link pointing');
                     $link.data('chap', index2);
                     console.log($link)
-                    $link.html('Chapitre ' + index2);
+                    $link.html('Chapitre ' + index2 + '<i class="chevron right icon"></i>');
 
                     $linkDiv.append($link);
                     $chapList.append($linkDiv);
