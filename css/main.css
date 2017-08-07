@@ -11,6 +11,10 @@ img
 {
     height: 100%;
 }
+#info_reader
+{
+    margin-top: 30px;
+}
 .ui.card
 {
     width: 100%;
@@ -30,6 +34,7 @@ img
 .chap-list
 {
     max-height: 150px;
+    overflow-y: scroll;
 }
 .chap-link-div
 {
@@ -68,6 +73,11 @@ img
     width: 50px;
     z-index: 200;
     font-size:2.1em;
+    opacity: 0.35;
+}
+.btn-navigation:hover
+{
+    opacity: 1;
 }
 .toggle-sidebar
 {
@@ -104,8 +114,20 @@ img
     width: 100%;
     text-align: center;
 }
-
 .bibi-menu
 {
     display: none;
 }
+
+
+/*
+.view-horizontal .image-spread-box.current:nth-child(odd) iframe.item
+{
+    margin-left: -50% !important;
+    padding-left: 50% !important;
+}
+.view-horizontal .image-spread-box.current:nth-child(even) iframe.item
+{
+    margin-right: -50% !important;
+    padding-right: 50% !important;
+}*/
