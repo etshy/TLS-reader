@@ -37,7 +37,7 @@ $(function()
     {
         $(".embed-reader").show();
         var url;
-        url = 'bib/i/?book='+selectedSerie+'/'+selectedChap;
+        url = 'reader.html?book='+selectedSerie+'/'+selectedChap;
         var epubUrl = encodeURI(url);
 
         $("#embedded_reader").attr('src', epubUrl);
