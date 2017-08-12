@@ -42,7 +42,7 @@ Bibi.Preset = {
 
 "book-background"            : "", // CSS background value or ""
 
-"spread-gap"                 : 2, // px
+"spread-gap"                 : 0, // px
 "spread-margin"              : 0, // px
 
 "spread-border-radius"       : "", // CSS border-radius value or ""
@@ -55,7 +55,7 @@ Bibi.Preset = {
 
 "flipper-width"              : 0.3, // ratio (lower than 1) or px (1 or higher)
 
-"page-breaking"              : false, // true or false (if true, CSS "page-break-before/after: always;" will work, partially)
+"page-breaking"              : true, // true or false (if true, CSS "page-break-before/after: always;" will work, partially)
 
 "epub-additional-stylesheet" : "", // path from spine-item or http:// URI or ""
 "epub-additional-script"     : "", // path from spine-item or http:// URI or ""
@@ -63,6 +63,7 @@ Bibi.Preset = {
     //added config
 "force-writing-mode"         : "rl-tb",
 "create-panel-switch"        : false,
+"stick-double-pages" : true,
 
 // =================================================================================================
 

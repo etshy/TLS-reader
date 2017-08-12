@@ -1535,7 +1535,15 @@ R.resetStage = function() {
 R.resetSpread = function(Spread) {
     O.stamp("Reset Spread " + Spread.SpreadIndex + " Start");
     E.dispatch("bibi:is-going-to:reset-spread", Spread);
+
     Spread.Items.forEach(function(Item) {
+        if(B.Unzipped === true)
+        {
+            Item.ItemIndex = Spread.SpreadIndex;
+        } else {
+            //TODO regarder comment ça se comporte avec un fichier epub, plutot qu'un dossier.
+        }
+
         R.resetItem(Item);
     });
     var SpreadBox = Spread.SpreadBox;
@@ -1578,6 +1586,15 @@ R.resetItem = function(Item) {
     O.stamp("Reset Item " + Item.ItemIndex + " Start");
     O.stamp("Reset Start", Item.TimeCard);
     E.dispatch("bibi:is-going-to:reset-item", Item);
+
+    if(S["stick-double-pages"] === true && S.SLD == "rtl" && S.SLA == "horizontal" && B.Unzipped === true){
+        //reset la position et le right de l'image
+        $(Item.Body.getElementsByTagName("img")).css({
+            "position" : "",
+            "right" : ""
+        });
+    }
+
     Item.Reset = false;
     Item.Pages = [];
     Item.scrolling = "no";
@@ -1596,6 +1613,7 @@ R.resetItem = function(Item) {
 };
 
 R.resetItem.asReflowableItem = function(Item) {
+
     var ItemIndex = Item.ItemIndex, ItemRef = Item.ItemRef, ItemBox = Item.ItemBox, Spread = Item.Spread;
     var StageB = R.Stage[S.SIZE.B];
     var StageL = R.Stage[S.SIZE.L];
@@ -1739,16 +1757,41 @@ R.resetItem.asReflowableOutsourcingItem = function(Item, Fun) {
     Item.style[S.SIZE.b] = ItemBox.style[S.SIZE.b] = PageB + "px";
     Item.style[S.SIZE.l] = ItemBox.style[S.SIZE.l] = PageL + "px";
     if(Item.ImageItem) {
+
+
+
         if(Item.HTML["scroll" + S.SIZE.B] <= PageB && Item.HTML["scroll" + S.SIZE.L] <= PageL) {
+
             var ItemBodyComputedStyle = getComputedStyle(Item.Body);
             Item.style.width = Item.Body.offsetWidth + parseFloat(ItemBodyComputedStyle.marginLeft) + parseFloat(ItemBodyComputedStyle.marginRight) + "px";
         } else {
-            if((S.SLD == "ttb" && Item.HTML["scroll" + S.SIZE.B] > PageB) || (S.SLA == "horizontal" && Item.HTML["scroll" + S.SIZE.L] > PageL)) {
-                var TransformOrigin = (/rl/.test(Item.HTML.WritingMode)) ? "100% 0" : "0 0";
-            } else {
-                var TransformOrigin =  "50% 0";
-            }
+//TODO modifier la gestion du transform origin ici pour avoir de spages qui se colle (0% pour les pages de droite et 100% pour le spages de gauche)
+
             var Scale = Math.floor(Math.min(PageB / Item.HTML["scroll" + S.SIZE.B], PageL / Item.HTML["scroll" + S.SIZE.L]) * 100) / 100;
+
+            if(S["stick-double-pages"] === true && S.SLD == "rtl" && S.SLA == "horizontal" && B.Unzipped === true){
+                //TODO page impair (plus page 0) = transform-origin 100% 0 0;
+                if (Item.ItemIndex %2 == 0) {
+                    var TransformOrigin = "0px 0px 0px";
+                    console.log('page droite')
+                }
+                else {
+
+                    console.log('page gauche')
+                    var TransformOrigin = "100% 0px 0px";
+                    $(Item.Body.getElementsByTagName("img")).css({
+                        "position" : "absolute",
+                        "right" : "0"
+                    });
+                }
+            } else {
+                if((S.SLD == "ttb" && Item.HTML["scroll" + S.SIZE.B] > PageB) || (S.SLA == "horizontal" && Item.HTML["scroll" + S.SIZE.L] > PageL)) {
+                    var TransformOrigin = (/rl/.test(Item.HTML.WritingMode)) ? "100% 0" : "0 0";
+                } else {
+                    var TransformOrigin =  "50% 0";
+                }
+            }
+
             sML.style(Item.HTML, {
                 "transform-origin": TransformOrigin,
                 "transform": "scale(" + Scale + ")"
@@ -1893,20 +1936,17 @@ R.layOutSpread = function(Spread) {
             SpreadBox.PaddingBefore = R.Stage.PageGap;
         }
     } else {
-        /*if(Spread.SpreadIndex == 0) {
-            //1ere page pourquoi faire un traitement différent des autres pages?
-            SpreadBox.PaddingBefore = Math.floor((R.Stage[S.SIZE.L] - SpreadBox["offset" + S.SIZE.L]) / 2);
-        } else {
-            SpreadBox.PaddingBefore = R.Stage.PageGap;
-        }*/
         SpreadBox.PaddingBefore = R.Stage.PageGap;
 
         if(Spread.SpreadIndex == R.Spreads.length - 1) {
             SpreadBox.PaddingAfter  = Math.ceil( (R.Stage[S.SIZE.L] - SpreadBox["offset" + S.SIZE.L]) / 2);
         }
     }
+
     if(SpreadBox.PaddingBefore > 0) SpreadBox.style["padding" + S.BASE.B] = SpreadBox.PaddingBefore + "px";
     if(SpreadBox.PaddingAfter  > 0) SpreadBox.style["padding" + S.BASE.A] = SpreadBox.PaddingAfter  + "px";
+
+    console.log(SpreadBox.PaddingAfter)
     // Adjust R.Main.Book (div#epub-content-main)
     var MainContentLength = 0;
     R.Spreads.forEach(function(Spread) {
@@ -1980,7 +2020,9 @@ R.layOut = function(Opt) {
     if(Opt.Reset || R.ToBeLaidOutLater) {
         R.ToBeLaidOutLater = false;
         R.resetStage();
-        R.Spreads.forEach(function(Spread) { R.resetSpread(Spread); });
+        R.Spreads.forEach(function(Spread) {
+            R.resetSpread(Spread);
+        });
         R.resetPages();
         R.resetNavigation();
     }
